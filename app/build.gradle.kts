@@ -61,4 +61,8 @@ dependencies {
 
     implementation("androidx.vectordrawable:vectordrawable:1.2.0")
     implementation("androidx.vectordrawable:vectordrawable-animated:1.2.0")
+
+    implementation("com.blankj:utilcodex:1.31.1")
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
 }
