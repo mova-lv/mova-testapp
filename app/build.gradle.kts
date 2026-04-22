@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.serialization)
+
 //    alias(libs.plugins.kotlin.android)
 //    id("com.google.devtools.ksp")
 //    alias(libs.plugins.google.ksp)
@@ -50,11 +52,10 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation(libs.bundles.nav3)
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
 //    ksp("com.github.bumptech.glide:compiler:4.12.0")
@@ -64,5 +65,6 @@ dependencies {
 
     implementation("com.blankj:utilcodex:1.31.1")
     implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("com.orhanobut:logger:2.2.0")
 
 }

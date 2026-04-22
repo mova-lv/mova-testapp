@@ -13,6 +13,7 @@ import com.bumptech.glide.request.transition.Transition
 class SDWebImageModule(private val reactContext: Context) {
     fun loadImagePath(imageUrl: String): String? {
         // Glide 原生API：提交下载并返回缓存文件
+        // 需要在后台线程执行此方法
         val file = Glide.with(reactContext)
             .downloadOnly()
             .load(imageUrl)
