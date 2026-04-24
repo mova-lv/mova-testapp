@@ -1,9 +1,7 @@
-package com.example.testapp
+package com.example.testapp.funcs
 
-import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Rect
 import android.util.Base64
 import com.blankj.utilcode.util.ImageUtils
 import java.io.ByteArrayOutputStream
@@ -43,33 +41,4 @@ class FileModule {
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
-
-//fun screenShotInRect(imageName: String, l1: Int, t1: Int, w1: Int, h1: Int, callback: Callback) {
-//    val context: Activity = getCurrentActivity()
-//    if (isActivityValid()) {
-//        var l: Float = DisplayUtil.dpToPx(context, l1)
-//        val t: Float = DisplayUtil.dpToPx(context, t1)
-//        val w: Float = DisplayUtil.dpToPx(context, w1)
-//        val h: Float = DisplayUtil.dpToPx(context, h1)
-//        if (l < 0) {
-//            l = 0f
-//        } else if (l + w > DisplayUtil.getScreenWidth(context)) {
-//            l = DisplayUtil.getScreenWidth(context) - w
-//        }
-//        val r = l + w
-//        val b = t + h
-//        val targetPath: String =
-//            android.dreame.module.rn.bridge.host.FileModule.CACHEDIR + imageName
-//        ScreenShot.getInstance().generate(
-//            context.getWindow().getDecorView().getRootView(),
-//            Rect(l.toInt(), t.toInt(), r.toInt(), b.toInt()),
-//            targetPath,
-//            object : OnGenerateListener() {
-//                public override fun onGenerateFinished(throwable: Throwable?) {
-//                    //出错不处理继续返回图片地址
-//                    callback.invoke(true, targetPath)
-//                }
-//            })
-//    }
-//}
 }

@@ -7,37 +7,28 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import androidx.navigationevent.NavigationEventDispatcher
+import com.example.testapp.pages.CropImagePage
+import com.example.testapp.pages.GlideNativeImagePage
+import com.example.testapp.pages.NavCropImage
+import com.example.testapp.pages.NavGlideNativeImage
 import com.example.testapp.ui.theme.TestappTheme
 
 class MainActivity : ComponentActivity() {
@@ -80,7 +71,7 @@ fun TestappApp() {
         },
     ) {
         NavDisplay(
-            modifier = Modifier.safeDrawingPadding(),
+            modifier = Modifier.safeContentPadding(),
             // 导航堆栈
             backStack = backStack,
             // 导航条目装饰器（用于处理viewmodel和状态保存）
@@ -101,15 +92,11 @@ fun TestappApp() {
                         slideOutHorizontally(targetOffsetX = { it })
             },
             entryProvider = entryProvider {
-                entry<Home> {
-                    Index1Page()
-                }
-                entry<Product> {
-                    Index2Page()
-                }
-                entry<About> {
-                    Index3Page()
-                }
+                entry<Home> { Index1Page(backStack) }
+                entry<Product> { Index2Page() }
+                entry<About> { Index3Page() }
+                entry<NavGlideNativeImage> { GlideNativeImagePage() }
+                entry<NavCropImage> { CropImagePage() }
             }
         )
     }
@@ -147,7 +134,7 @@ fun TestPagePreview() {
             }
         },
     ) {
-        Index1Page()
+        Index1PagePreview()
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.testapp
+package com.example.testapp.pages
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,47 +19,53 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
+import androidx.navigation3.runtime.NavKey
+import com.example.testapp.funcs.FileModule
+import com.example.testapp.funcs.SDWebImageModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
 import java.io.File
 
+@Serializable
+data object NavCropImage : NavKey
+
 @Composable
-fun GlideNativeImagePage() {
+fun CropImagePage() {
     // 图片 URL
     var imageUrl by remember {
-        mutableStateOf("https://mmbiz.qpic.cn/mmbiz_jpg/AYbHGia3GVC2Xpb4ybk6gviawxCZHg2FzQoImbnpxyE8QyxVEZpcStYSvCCv1G8k4ZYd1Je1QWXFNXWM1uic7wHBwRGcNS1Jgzx7ho54shZAa8/640?wx_fmt=jpeg&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=0")
+        mutableStateOf("https://pet-oss-sg.iot.mova-tech.com/cat-litter-server/pet-avatar/226d111b-8dbf-4070-955c-ed5fbc053363.jpeg")
     }
 
-    // 加载状态
-    var isLoading by remember { mutableStateOf(false) }
-    var loadError by remember { mutableStateOf(false) }
-    var bitmap: ImageBitmap? by remember { mutableStateOf(null) }
+    var imageBitmap: ImageBitmap? by remember { mutableStateOf(null) }
+    var resultBitmap: ImageBitmap? by remember { mutableStateOf(null) }
 
-    var imageCachePath by remember { mutableStateOf("") }
+    var resultBase64Image by remember { mutableStateOf("") }
+    var base64ImageString by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
+    val fileModule = FileModule()
+
     // 加载：Glide 只返回文件
     fun loadImage(url: String) {
         scope.launch {
-            isLoading = true
-            loadError = false
             val tempPath = withContext(Dispatchers.IO) {
                 SDWebImageModule(context).loadImagePath(url) ?: ""
             }
             if (tempPath.isNotEmpty()) {
-                imageCachePath = tempPath
-                loadError = false
-            } else {
-                loadError = true
+                withContext(Dispatchers.IO) {
+                    base64ImageString = fileModule.convertFileToBase64(File(tempPath)) ?: ""
+                    val bitmap = fileModule.convertBase64ToBitmap(base64ImageString)
+                    imageBitmap = bitmap.asImageBitmap()
+                }
             }
-            isLoading = false
         }
     }
 
@@ -74,39 +79,48 @@ fun GlideNativeImagePage() {
         verticalArrangement = Arrangement.Center
     ) {
         Box(
-            modifier = Modifier.size(300.dp),
+            modifier = Modifier.size(200.dp),
             contentAlignment = Alignment.Center
         ) {
-            // 加载中
-            if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.size(40.dp))
-            }
-            // 加载失败
-            else if (loadError) {
-                Text("加载失败")
-            }
-            // 显示图片
-            else {
+            if (imageBitmap != null) {
                 Image(
-//                    bitmap = imageBitmap,
-                    painter = rememberAsyncImagePainter(model = File(imageCachePath)),
-                    contentDescription = "网络图片",
+                    bitmap = imageBitmap!!,
+//                painter = rememberAsyncImagePainter(model = File(imageCachePath)),
+                    contentDescription = "原始图片",
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Inside
                 )
             }
         }
 
         Button(
             onClick = {
-                imageUrl =
-                    "https://pet-oss-sg.iot.mova-tech.com/cat-litter-server/pet-avatar/226d111b-8dbf-4070-955c-ed5fbc053363.jpeg"
+                scope.launch {
+                    withContext(Dispatchers.IO) {
+                        val cropbitmap =
+                            fileModule.cropImageFromBase64(base64ImageString, 1500, 400, 600, 600)
+                        resultBitmap = cropbitmap.asImageBitmap()
+                    }
+                }
             },
             modifier = Modifier.padding(top = 20.dp)
         ) {
-            Text("刷新图片")
+            Text("裁切图片")
         }
         val orchestrating = SDWebImageModule(context).getCacheSize() ?: "缓存为空"
-        Text("当前缓存大小${orchestrating}\n当前图片缓存路径 $imageCachePath")
+        Text("当前缓存大小${orchestrating}")
+        Box(
+            modifier = Modifier.size(200.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            if (resultBitmap != null) {
+                Image(
+                    bitmap = resultBitmap!!,
+                    contentDescription = "结果图片",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Inside
+                )
+            }
+        }
     }
 }

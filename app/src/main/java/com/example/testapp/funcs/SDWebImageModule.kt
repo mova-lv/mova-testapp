@@ -1,14 +1,8 @@
-package com.example.testapp
+package com.example.testapp.funcs
 
 import android.content.Context
-import android.graphics.Bitmap
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.text.Placeholder
 import com.blankj.utilcode.util.FileUtils
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 
 class SDWebImageModule(private val reactContext: Context) {
     fun loadImagePath(imageUrl: String): String? {
