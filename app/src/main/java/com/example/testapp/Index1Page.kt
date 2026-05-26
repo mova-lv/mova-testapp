@@ -18,6 +18,8 @@ import kotlinx.serialization.Serializable
 import androidx.navigation3.runtime.NavKey
 import com.example.testapp.pages.NavCropImage
 import com.example.testapp.pages.NavGlideNativeImage
+import com.example.testapp.pages.NavCameraPage
+import com.example.testapp.pages.NavFakeCamera
 
 @Serializable
 data object Home : NavKey
@@ -45,6 +47,18 @@ fun Index1Page(backStack: NavBackStack<NavKey>) {
         ) {
             Text("图片转Base64和裁切")
         }
+        Button(
+            onClick = { backStack.add(NavCameraPage) },
+            modifier = Modifier.padding(top = 20.dp)
+        ) {
+            Text("CameraX")
+        }
+        Button(
+            onClick = { backStack.add(NavFakeCamera) },
+            modifier = Modifier.padding(top = 20.dp)
+        ) {
+            Text("Fake Camera")
+        }
     }
 }
 
@@ -55,7 +69,7 @@ fun Index1PagePreview() {
         Button(
             onClick = { },
             modifier = Modifier.padding(top = 20.dp),
-            style = {}
+//            style = {}
         ) {
             Text("NavGlideNativeImage")
         }
@@ -64,6 +78,12 @@ fun Index1PagePreview() {
             modifier = Modifier.padding(top = 20.dp)
         ) {
             Text("图片转Base64和裁切")
+        }
+        Button(
+            onClick = { },
+            modifier = Modifier.padding(top = 20.dp)
+        ) {
+            Text("CameraX")
         }
     }
 }

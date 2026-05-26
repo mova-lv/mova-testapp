@@ -29,8 +29,11 @@ import com.example.testapp.pages.CropImagePage
 import com.example.testapp.pages.GlideNativeImagePage
 import com.example.testapp.pages.NavCropImage
 import com.example.testapp.pages.NavGlideNativeImage
+import com.example.testapp.pages.NavCameraPage
+import com.example.testapp.pages.NavFakeCamera
+import com.example.testapp.pages.CameraPage
+import com.example.testapp.pages.FakeCameraPage
 import com.example.testapp.ui.theme.TestappTheme
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +100,8 @@ fun TestappApp() {
                 entry<About> { Index3Page() }
                 entry<NavGlideNativeImage> { GlideNativeImagePage() }
                 entry<NavCropImage> { CropImagePage() }
+                entry<NavCameraPage> { CameraPage() }
+                entry<NavFakeCamera> { FakeCameraPage() }
             }
         )
     }

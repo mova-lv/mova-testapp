@@ -16,6 +16,7 @@ ksp = "2.3.6"
 
 nav3 = "1.0.0"
 viewmodelNav3 = "2.10.0"
+cameraX = "1.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,15 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+# CameraX
+camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
+camera-compose = { group = "androidx.camera", name = "camera-compose", version.ref = "cameraX" }
+camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "cameraX" }
+
 google-devtools-ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
@@ -42,6 +52,7 @@ viewmodel-nav3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-nav
 
 [bundles]
 nav3 = ["nav3-ui", "viewmodel-nav3"]
+camerax = ["camera-core", "camera-camera2", "camera-lifecycle", "camera-compose", "camera-video"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

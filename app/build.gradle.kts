@@ -56,6 +56,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     implementation(libs.bundles.nav3)
+    implementation(libs.bundles.camerax)
+    implementation(libs.compose.material.icons.extended)
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
 //    ksp("com.github.bumptech.glide:compiler:4.12.0")
